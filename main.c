@@ -34,13 +34,6 @@ void* thr_TimerMngr(void *arg)
    struct sigevent sev;
    timer_t timer;
 
-   while(1)
-   {
-     sleep(10);
-     printf("I'm a thread and I'm alive...\n");
-   }
-
-#if 0
    /* Stabiliamo handler per il segnale */
 
    /* impostando SA_SIGINFO, il secondo parametro che viene passato all'handler e` siginfo_t il
@@ -61,11 +54,11 @@ void* thr_TimerMngr(void *arg)
    sev.sigev_signo = TIMER_SIG;                 /* Notifica usando TIMER_SIG */
    sev.sigev_value.sival_ptr = &timer;          /* Ottiene ID del timer per l'handler */
 
-   ts.it_value.tv_sec = 0;
-   ts.it_value.tv_nsec = 10000000;
+   ts.it_value.tv_sec = 10;
+   ts.it_value.tv_nsec = 0;
 
-   ts.it_interval.tv_sec = 0;
-   ts.it_interval.tv_nsec = 10000000;
+   ts.it_interval.tv_sec = 10;
+   ts.it_interval.tv_nsec = 0;
 
    if (timer_create(CLOCK_REALTIME, &sev, &timer) == -1)
    {
@@ -82,18 +75,17 @@ void* thr_TimerMngr(void *arg)
    //memset(&timeOut,0,sizeof(timeOut));
    sem_init(&semTimer,0,0);
 
-   sem_post(&semStart);                         // riabilito main thread
+   //sem_post(&semStart);                         // riabilito main thread
 
    while (1)
    {
       sem_wait(&semTimer);                      // attende risveglio ogni 10 ms
 //      threads |= TH_TIMER;
-     tickCount ++;                             // incrementa tick
-if ((tickCount % 60000) == 0)
+     tickCount++;                             // incrementa tick
+if ((tickCount % 6) == 0)
    up_info("1 minuto");
 //      WakeUp_104();                             // per attivazione thread Process_104
    }
-#endif
 }
 
 int main(void)
