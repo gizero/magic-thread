@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -33,6 +34,13 @@ void* thr_TimerMngr(void *arg)
    struct sigevent sev;
    timer_t timer;
 
+   while(1)
+   {
+     sleep(10);
+     printf("I'm a thread and I'm alive...\n");
+   }
+
+#if 0
    /* Stabiliamo handler per il segnale */
 
    /* impostando SA_SIGINFO, il secondo parametro che viene passato all'handler e` siginfo_t il
@@ -85,6 +93,7 @@ if ((tickCount % 60000) == 0)
    up_info("1 minuto");
 //      WakeUp_104();                             // per attivazione thread Process_104
    }
+#endif
 }
 
 int main(void)
@@ -99,13 +108,15 @@ int main(void)
     exit(EXIT_FAILURE);
   }
 
-  printf("Gonna wait for thread termination...\n");
+  printf("gonna wait for thread termination...\n");
 
   ret = pthread_join(t, res);
   if (ret != 0) {
     perror("pthread_join");
     exit(EXIT_FAILURE);
   }
+
+  printf("thread terminated...\n");
 
   exit(EXIT_SUCCESS);
 }
