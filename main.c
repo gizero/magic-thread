@@ -94,6 +94,8 @@ int main(void)
   void *res;
   int ret;
 
+  setbuf(stdout, NULL);
+
   ret = pthread_create(&t, NULL, thr_TimerMngr, NULL);
   if (ret != 0) {
     perror("pthread_create");
