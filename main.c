@@ -54,11 +54,11 @@ void* thr_TimerMngr(void *arg)
    sev.sigev_signo = TIMER_SIG;                 /* Notifica usando TIMER_SIG */
    sev.sigev_value.sival_ptr = &timer;          /* Ottiene ID del timer per l'handler */
 
-   ts.it_value.tv_sec = 10;
-   ts.it_value.tv_nsec = 0;
+   ts.it_value.tv_sec = 0;
+   ts.it_value.tv_nsec = 10000000;
 
-   ts.it_interval.tv_sec = 10;
-   ts.it_interval.tv_nsec = 0;
+   ts.it_interval.tv_sec = 0;
+   ts.it_interval.tv_nsec = 10000000;
 
    if (timer_create(CLOCK_REALTIME, &sev, &timer) == -1)
    {
@@ -82,7 +82,7 @@ void* thr_TimerMngr(void *arg)
       sem_wait(&semTimer);                      // attende risveglio ogni 10 ms
 //      threads |= TH_TIMER;
      tickCount++;                             // incrementa tick
-if ((tickCount % 6) == 0)
+if ((tickCount % 6000) == 0)
    up_info("1 minuto");
 //      WakeUp_104();                             // per attivazione thread Process_104
    }
