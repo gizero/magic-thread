@@ -1,4 +1,11 @@
-To run with stdout timestamping:
+How to get the sources:
+git clone git@github.com:gizero/magic-thread.git
+
+How to build:
+cd magic-thread/
+make
+
+How to run with stdout timestamping:
 ./threadme | awk '{ print strftime("%Y-%m-%d %H:%M:%S"), $0; fflush(); }'
 
 To attach strace with timestamping:
